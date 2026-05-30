@@ -1,3 +1,4 @@
 node_modules
-package.json
+# This repo uses npm for the opencode plugin dependency snapshot:
+# track package.json + package-lock.json, ignore installed packages.
 bun.lock
