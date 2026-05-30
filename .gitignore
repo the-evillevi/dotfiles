@@ -27,6 +27,8 @@
 # Neovim local/plugin generated dirs
 .config/nvim/plugin/
 .config/nvim/.luarc.json
+.config/nvim/doc/tags
+.config/nvim/spell/
 
 # Keep lazy-lock.json tracked if you want reproducible plugin versions.
 # Uncomment this only if you do NOT want to track plugin lockfiles.
@@ -35,6 +37,9 @@
 # GitHub CLI
 # hosts.yml may contain account/auth-related local state depending on setup.
 .config/gh/hosts.yml
+
+# Zed generated local databases
+.config/zed/prompts/
 
 # Node / JS tooling
 node_modules/
@@ -55,4 +60,3 @@ node_modules/
 # Local-only config files
 *.local
 *.local.*
-
