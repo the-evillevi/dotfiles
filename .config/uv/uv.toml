@@ -5,8 +5,10 @@
 only-binary = [":all:"]
 
 #  NOTE: Pin Dependencies with Hash Verification
-#  require cryptographic hashes for all packages to detect tampering, even across identical version
-#  numbers. works automatically with `uv sync` (reads from uv.lock), or with hashed requirements
+#  Require cryptographic hashes for all packages to detect tampering, even across identical version
+#  numbers. This is intentionally secure by default; opt out only for a specific command/project
+#  when you understand why hashes are impractical there. Works automatically with `uv sync`
+#  (reads from uv.lock), or with hashed requirements
 #  files generated via: uv pip compile --generate-hashes requirements.in -o requirements.txt
 #
 #  WARN: installation will fail if any package in your requirements file is missing a hash.
@@ -14,16 +16,16 @@ only-binary = [":all:"]
 require-hashes = true
 
 #  NOTE: Install with Cooldown
-#  delay installations of recently published packages, allowind time for the community to discover
+#  Delay installations of recently published packages, allowing time for the community to discover
 #  and report potential security issues. 7 days for general use recommended, use 30 days for production deployments.
 
-#  WARN: When exlude-newer filters out a package version, uv does not mention it in error messages.
+#  WARN: When exclude-newer filters out a package version, uv does not mention it in error messages.
 #  if you encounter unexpected resolution failures, temporarily removing the cooldown can help
 #  diagnose whether a recent release is required. 
 exclude-newer = "7 days"
 
 #  NOTE: Prevent Dependency Confusion
-#  use uv's first-match index strategy to ensure that internal packages are always resolved from your 
+#  Use uv's first-match index strategy to ensure that internal packages are always resolved from your
 #  private index, preventing dependency confusion attacks. Explicitly pin packages to specific indexes
 #  using `[tool.uv.sources]`
 
@@ -37,5 +39,4 @@ exclude-newer = "7 days"
 # Public PyPI is the fallback
 [[index]]
 name = "pypi"
-url = "htps://pypi.org/simple"
-
+url = "https://pypi.org/simple"
