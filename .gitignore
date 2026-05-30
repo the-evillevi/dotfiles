@@ -1,0 +1,58 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Finder thumbnails / metadata
+._*
+
+# Spotlight / Trash
+.Spotlight-V100
+.Trashes
+
+# Editor swap / temp files
+*.swp
+*.swo
+*~
+*.tmp
+*.bak
+
+# Logs
+*.log
+
+# Neovim
+.config/nvim/.nvimlog
+.config/nvim/.netrwhist
+
+# Neovim local/plugin generated dirs
+.config/nvim/plugin/
+.config/nvim/.luarc.json
+
+# Keep lazy-lock.json tracked if you want reproducible plugin versions.
+# Uncomment this only if you do NOT want to track plugin lockfiles.
+# .config/nvim/lazy-lock.json
+
+# GitHub CLI
+# hosts.yml may contain account/auth-related local state depending on setup.
+.config/gh/hosts.yml
+
+# Node / JS tooling
+node_modules/
+.config/opencode/node_modules/
+
+# Package manager caches
+.npm/
+.yarn/
+.pnpm-store/
+
+# Environment files / secrets
+.env
+.env.*
+*.pem
+*.key
+*.crt
+
+# Local-only config files
+*.local
+*.local.*
+
