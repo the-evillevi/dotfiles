@@ -2,9 +2,26 @@
 # PATH
 # -------------------------------------------------------------------
 
-# Appends Go binary directory to PATH if not already present.
-# The guard prevents PATH from growing indefinitely on repeated sourcing.
-[[ :$PATH: == *":$HOME/go/bin:"* ]] || export PATH=$PATH:$HOME/go/bin
+# Zsh exposes PATH as an array named `path`. Updating the array is less
+# error-prone than manually editing the colon-separated string.
+typeset -U path PATH
+
+path_append() {
+  [[ -d "$1" ]] || return 0
+  path+=("$1")
+}
+
+path_prepend() {
+  [[ -d "$1" ]] || return 0
+  path=("$1" $path)
+}
+
+# User-installed Go binaries.
+path_append "$HOME/go/bin"
+
+# pnpm installs global binaries here on macOS.
+export PNPM_HOME="$HOME/Library/pnpm"
+path_prepend "$PNPM_HOME/bin"
 
 # -------------------------------------------------------------------
 # Default editor
@@ -54,20 +71,28 @@ setopt autocd extendedglob correct notify
 # insertion), and Alt+C (fuzzy directory navigation). Also enables
 # fuzzy completions for commands like kill, ssh, and export.
 
-source <(fzf --zsh)
-
 export FZF_DEFAULT_OPTS="
 	--height 40%
 	--layout=reverse
 	--border
-	--preview 'bat --style=numbers --color=always {}'
 "
+
+if command -v bat >/dev/null; then
+  export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS}
+	--preview 'bat --style=numbers --color=always {}'"
+fi
+
+if command -v fzf >/dev/null; then
+  source <(fzf --zsh)
+fi
 
 # -------------------------------------------------------------------
 # Prompt
 # -------------------------------------------------------------------
 
-eval "$(starship init zsh)"
+if command -v starship >/dev/null; then
+  eval "$(starship init zsh)"
+fi
 
 # -------------------------------------------------------------------
 # Directory navigation (zoxide)
@@ -75,14 +100,21 @@ eval "$(starship init zsh)"
 # Replaces cd with a frecency-based jump tool. Frequently accessed
 # directories can be reached by typing fragments of their path.
 
-eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 # -------------------------------------------------------------------
 # uv and uvx, enable shell autocompletion
 # -------------------------------------------------------------------
 
-eval "$(uv generate-shell-completion zsh)"
-eval "$(uvx --generate-shell-completion zsh)"
+if command -v uv >/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
+if command -v uvx >/dev/null; then
+  eval "$(uvx --generate-shell-completion zsh)"
+fi
 
 # -------------------------------------------------------------------
 # Aliases
@@ -101,24 +133,24 @@ alias diff="diff --color=auto"
 # Plugins
 # -------------------------------------------------------------------
 
-# syntax hightlighting: https://github.com/zsh-users/zsh-syntax-highlighting/
-source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+if command -v brew >/dev/null; then
+  brew_prefix="$(brew --prefix 2>/dev/null)"
 
-# autosuggestions: https://github.com/zsh-users/zsh-autosuggestions/
-source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  # syntax hightlighting: https://github.com/zsh-users/zsh-syntax-highlighting/
+  [[ -r "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
+    source "$brew_prefix/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-# history substring search: https://github.com/zsh-users/zsh-history-substring-search
-source "$(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+  # autosuggestions: https://github.com/zsh-users/zsh-autosuggestions/
+  [[ -r "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] &&
+    source "$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
+  # history substring search: https://github.com/zsh-users/zsh-history-substring-search
+  if [[ -r "$brew_prefix/share/zsh-history-substring-search/zsh-history-substring-search.zsh" ]]; then
+    source "$brew_prefix/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    bindkey "^[[A" history-substring-search-up
+    bindkey "^[[B" history-substring-search-down
+    export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true
+  fi
 
-export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=true
-
-# pnpm
-export PNPM_HOME="/Users/evillevi/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
-# pnpm end
+  unset brew_prefix
+fi
