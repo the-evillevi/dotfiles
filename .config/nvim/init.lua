@@ -592,16 +592,49 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
 
-        gopls = {}, -- Golang LSP
+        -- Go
+        gopls = {},
+
+        -- Astro
         astro = {
           init_options = {
             typescript = {
               tsdk = vim.fn.getcwd() .. '/node_modules/typescript/lib',
             },
           },
-        }, -- Astro LSP
+        },
 
-        stylua = {}, -- Used to format Lua code
+        -- Web
+        html = {},
+        cssls = {},
+        ts_ls = {},
+        jsonls = {},
+
+        -- Markdown
+        marksman = {},
+
+        -- YAML
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
+
+        -- TOML
+        taplo = {},
+
+        -- SQL
+        sqlls = {},
+
+        -- Python
+        pyright = {},
+        ruff = {},
+
+        -- Lua
+        -- 260531: i don't think stylua is an LSP, besides there's the lua_ls below
+        --stylua = {},
 
         -- Special Lua Config, as recommended by neovim help docs
         lua_ls = {
@@ -643,9 +676,14 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'prettier',
-        'taplo', -- Formatter for TOML files
+        'stylua',
         'sql-formatter',
-        'ruff', -- Lightning-fast formatter for Python
+        'gofumpt',
+
+        -- 260531: apparently only non-LSP tools/formatters should be here,
+        -- but gofumpt is a formatter tho??
+        --'ruff', -- Lightning-fast formatter for Python
+        --'taplo', -- Formatter for TOML files
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -690,10 +728,20 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'gofmt' },
+
         astro = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        json = { 'prettier' },
+        markdown = { 'prettier' },
+        yaml = { 'prettier' },
+
         toml = { 'taplo' },
         sql = { 'sql_formatter' },
         python = { 'ruff_organize_imports', 'ruff_format' },
+
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -910,6 +958,7 @@ require('lazy').setup({
         'typescript',
         'vim',
         'vimdoc',
+        'yaml',
       }
       require('nvim-treesitter').install(parsers)
 
