@@ -238,6 +238,15 @@ require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
 
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    opts = function(_, opts) return require('indent-rainbowline').make_opts(opts) end,
+    dependencies = {
+      'TheGLander/indent-rainbowline.nvim',
+    },
+  },
+
   { 'wakatime/vim-wakatime', lazy = false },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
