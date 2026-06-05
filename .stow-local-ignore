@@ -1,0 +1,13 @@
+# VCS and repo metadata
+^/\.git
+^/\.gitignore$
+^/\.stow-local-ignore$
+^/README\.md$
+
+# Root package-manager and commit tooling files are for this repo only.
+^/package\.json$
+^/pnpm-lock\.yaml$
+^/commitlint\.config\.mjs$
+^/\.husky
+^/node_modules
+^/\.pnpm-store

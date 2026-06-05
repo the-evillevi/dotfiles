@@ -75,6 +75,22 @@ that tool here.
 Track `lazy-lock.json` for Neovim. It records the exact plugin commits that are
 known to work, which makes a fresh machine more reproducible.
 
+## Repo Tooling
+
+Run `pnpm install` after cloning if you want local commit-message checks. The
+Husky `commit-msg` hook runs commitlint against the Conventional Commit rules in
+`commitlint.config.mjs`. The pinned commitlint release requires Node 22.12 or
+newer.
+
+You can also check the latest commit manually:
+
+```sh
+pnpm commitlint:last
+```
+
+Local hooks can be bypassed, so add CI enforcement later if this repository needs
+server-side protection.
+
 Use a Stow dry-run before applying broad changes:
 
 ```sh
