@@ -75,6 +75,12 @@ that tool here.
 Track `lazy-lock.json` for Neovim. It records the exact plugin commits that are
 known to work, which makes a fresh machine more reproducible.
 
+The global `uv` config is intentionally strict: it requires dependency hashes,
+uses binary-only installs, and delays very new package releases. These defaults
+reduce Python supply-chain risk. For workflows that cannot use hashed inputs,
+prefer a project-specific override or one-off command flag instead of relaxing the
+global default.
+
 Use a Stow dry-run before applying broad changes:
 
 ```sh
