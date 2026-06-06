@@ -1,18 +1,13 @@
 # Neovim TODO
 
-Manual follow-up notes for the skipped Phase 5 cleanup.
-
-## Issues Covered
-
-- `DOT-012`: Gradually modularize the Kickstart-derived `init.lua`.
-- `DOT-013`: Review the terminal-mode escape mapping.
+Gradually modularize the Kickstart-derived `init.lua`.
 
 ## Guiding Rule
 
 Move one small piece at a time, then start Neovim and verify it still loads.
 Dotfiles are easier to learn when every change has a short feedback loop.
 
-## 2. Create A Small Config Module Structure
+## 1. Create A Small Config Module Structure
 
 Start with empty Lua files:
 
@@ -39,7 +34,7 @@ Verification:
 nvim --headless '+quit'
 ```
 
-## 3. Move Options First
+## 2. Move Options First
 
 Move basic `vim.o` and `vim.opt` settings into `lua/config/options.lua`.
 
@@ -67,7 +62,7 @@ nvim --headless '+quit'
 Learning note: options are the safest first move because they usually do not
 depend on plugin load order.
 
-## 4. Move Keymaps Second
+## 3. Move Keymaps Second
 
 Move general `vim.keymap.set(...)` calls into `lua/config/keymaps.lua`.
 
@@ -88,7 +83,7 @@ nvim --headless '+quit'
 
 Then test the mappings interactively.
 
-## 5. Move Autocommands Third
+## 4. Move Autocommands Third
 
 Move general autocommands into `lua/config/autocmds.lua`.
 
@@ -105,7 +100,7 @@ Verification:
 nvim --headless '+quit'
 ```
 
-## 6. Enable A Plugin Import
+## 5. Enable A Plugin Import
 
 Current Kickstart comments mention:
 
@@ -136,7 +131,7 @@ nvim --headless '+Lazy! sync' '+quitall'
 
 Use the interactive `:Lazy` screen when you want to inspect plugin status.
 
-## 7. Keep The Lockfile Updated
+## 6. Keep The Lockfile Updated
 
 After changing plugins, update and review:
 
@@ -159,7 +154,7 @@ git diff -- .config/nvim/lazy-lock.json
 Learning note: `lazy-lock.json` is not runtime junk. It is the receipt for the
 plugin versions that currently work.
 
-## 8. Suggested Stopping Points
+## 7. Suggested Stopping Points
 
 Safe checkpoints:
 
