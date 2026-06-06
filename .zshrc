@@ -31,6 +31,13 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 # -------------------------------------------------------------------
+# Line editing
+# -------------------------------------------------------------------
+# Use vi-style editing at the shell prompt. Starship reads this ZLE mode
+# and displays the configured vimcmd_* prompt symbols.
+bindkey -v
+
+# -------------------------------------------------------------------
 # Shell history
 # -------------------------------------------------------------------
 # Persists command history across sessions, shares history between
