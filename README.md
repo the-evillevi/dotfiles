@@ -81,6 +81,22 @@ reduce Python supply-chain risk. For workflows that cannot use hashed inputs,
 prefer a project-specific override or one-off command flag instead of relaxing the
 global default.
 
+## Repo Tooling
+
+Run `pnpm install` after cloning if you want local commit-message checks. The
+Husky `commit-msg` hook runs commitlint against the Conventional Commit rules in
+`commitlint.config.mjs`. The pinned commitlint release requires Node 22.12 or
+newer.
+
+You can also check the latest commit manually:
+
+```sh
+pnpm commitlint:last
+```
+
+Local hooks can be bypassed, so add CI enforcement later if this repository needs
+server-side protection.
+
 Use a Stow dry-run before applying broad changes:
 
 ```sh
