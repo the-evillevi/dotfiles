@@ -12,45 +12,6 @@ Manual follow-up notes for the skipped Phase 5 cleanup.
 Move one small piece at a time, then start Neovim and verify it still loads.
 Dotfiles are easier to learn when every change has a short feedback loop.
 
-## 1. Review The Terminal Escape Mapping
-
-Current mapping in `init.lua`:
-
-```lua
-vim.keymap.set('t', '<Esc><:sc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-```
-
-Decide whether this is intentional.
-
-Suggested options:
-
-1. Keep it if you already use this key sequence.
-2. Replace it with a more common mapping:
-
-   ```lua
-   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-   ```
-
-3. Remove the custom mapping and use Neovim's built-in terminal escape:
-
-   ```text
-   <C-\><C-n>
-   ```
-
-Verification:
-
-```sh
-nvim
-```
-
-Inside Neovim:
-
-```vim
-:terminal
-```
-
-Then test the chosen key sequence and confirm you return to normal mode.
-
 ## 2. Create A Small Config Module Structure
 
 Start with empty Lua files:
