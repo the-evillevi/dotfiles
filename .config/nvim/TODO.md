@@ -7,7 +7,7 @@ Gradually modularize the Kickstart-derived `init.lua`.
 Move one small piece at a time, then start Neovim and verify it still loads.
 Dotfiles are easier to learn when every change has a short feedback loop.
 
-## 1. Create A Small Config Module Structure
+## DONE: 1. Create A Small Config Module Structure
 
 Start with empty Lua files:
 
@@ -34,7 +34,7 @@ Verification:
 nvim --headless '+quit'
 ```
 
-## 2. Move Options First
+## DONE: 2. Move Options First
 
 Move basic `vim.o` and `vim.opt` settings into `lua/config/options.lua`.
 
@@ -62,7 +62,7 @@ nvim --headless '+quit'
 Learning note: options are the safest first move because they usually do not
 depend on plugin load order.
 
-## 3. Move Keymaps Second
+## DONE: 3. Move Keymaps Second
 
 Move general `vim.keymap.set(...)` calls into `lua/config/keymaps.lua`.
 
@@ -83,7 +83,7 @@ nvim --headless '+quit'
 
 Then test the mappings interactively.
 
-## 4. Move Autocommands Third
+## DONE: 4. Move Autocommands Third
 
 Move general autocommands into `lua/config/autocmds.lua`.
 
@@ -100,7 +100,7 @@ Verification:
 nvim --headless '+quit'
 ```
 
-## 5. Enable A Plugin Import
+## WIP: 5. Enable A Plugin Import
 
 Current Kickstart comments mention:
 
