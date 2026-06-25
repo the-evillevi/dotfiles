@@ -42,6 +42,10 @@
 # hosts.yml may contain account/auth-related local state depending on setup.
 .config/gh/hosts.yml
 
+# Snyk CLI OAuth/local trust config
+.config/configstore/snyk.json
+.config/configstore/snyk.json.lock
+
 # Zed generated local databases
 .config/zed/prompts/
 
